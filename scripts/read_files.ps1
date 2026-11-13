@@ -44,15 +44,16 @@ foreach ($p in $obsPaths) {
 }
 
 if ($CustomerName -and -not $DetectOnly) {
-    foreach ($fileInfo in $r.files) {
+    for ($fi = 0; $fi -lt $r.files.Count; $fi++) {
+        $fileInfo = $r.files[$fi]
         $fp = $fileInfo.path
         if (-not (Test-Path -LiteralPath $fp)) { continue }
         $ext = [System.IO.Path]::GetExtension($fp).ToLower()
         if ($ext -eq ".md" -or $ext -eq ".csv" -or $ext -eq ".txt") {
             try {
-                $content = Get-Content -LiteralPath $fp -Raw -ErrorAction SilentlyContinue
+                $content = Get-Content -LiteralPath $fp -Raw -Encoding UTF8 -ErrorAction SilentlyContinue
                 if ($content -and $content.Contains($CustomerName)) {
-                    $fileInfo.customerMatch = $true
+            $r.files[$fi].customerMatch = $true
                 }
             } catch { continue }
         }
