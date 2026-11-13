@@ -1,0 +1,4 @@
+version: 1
+interface:
+  display_name: 客户跟进研判
+  short_description: 先查内部、再看外部、最后才写信
